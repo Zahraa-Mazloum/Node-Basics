@@ -14,7 +14,7 @@ function startApp(name){
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
-  console.log("--------------------")
+  console.log("************************************")
 }
 
 
@@ -74,7 +74,7 @@ function hello(){
  * @returns {void}
  */
 function quit(){
-  console.log('Quitting now, goodbye!')
+  console.log('sad to see you quitting, goodbye!')
   process.exit();
 }
 
