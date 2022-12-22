@@ -72,7 +72,7 @@ function hello(){
 }
 
 /**
- * List of command
+ * Return thr list of commands
  *
  * @returns {void}
  */
