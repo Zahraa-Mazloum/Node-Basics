@@ -76,7 +76,7 @@ function hello(text){
  * @returns {void}
  */
 function help(){
-  console.log('the list of commands : \n1.hello\n2.quit\n3.exit\n')
+  console.log('the list of commands : \n1.hello + if you want to add something\n2.quit\n3.exit\n')
 }
 
 /**
