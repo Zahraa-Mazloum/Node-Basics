@@ -44,6 +44,9 @@ function onDataReceived(text) {
     help()
 
   }
+  else if(text.startsWith('add'))  {
+    add(text);
+  }
   else if(text==='list\n'){
     list()
 
@@ -89,6 +92,16 @@ function list() {
     console.log(`${number}. ${item}`)
   })
 }
+
+function add(newTask) {
+  if (newTask === "add\n") {
+    console.log('Please you need to specify your task \n type help if you need a hint');
+  } else {
+    task.push(newTask.replace("add", " ").trim());
+    console.log('your new task has been recorded!')
+  }
+}
+
 
 /**
  * Exits the application
