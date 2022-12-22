@@ -44,11 +44,15 @@ function onDataReceived(text) {
     help()
 
   }
+  else if(text==='list\n'){
+    list()
+
+  }
   else{
     unknownCommand(text);
   }
 }
-
+let task=["eat","sleep","code","repeat"]
 
 /**
  * prints "unknown command"
@@ -77,6 +81,13 @@ function hello(text){
  */
 function help(){
   console.log('the list of commands : \n1.hello + if you want to add something\n2.quit\n3.exit\n')
+}
+
+function list() {
+  task.map((item, number) => {
+    number++;
+    console.log(`${number}. ${item}`)
+  })
 }
 
 /**
