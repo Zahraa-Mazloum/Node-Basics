@@ -53,6 +53,12 @@ function onDataReceived(text) {
     list()
 
   }
+  else if (text.startsWith('check')) {
+    check(text);
+  }
+  else if (text.startsWith('uncheck')) {
+    uncheck(text);
+  }
   else if (text.startsWith('remove')) {
     remove(text)
 
@@ -116,6 +122,29 @@ function list() {
       }
   });
 }
+
+function check(taskDone){
+  if(taskDone==="check\n"){
+    console.log("please choose the task")
+  }
+  else{
+    let checked =taskDone.replace('check',' ').trim()
+    tasks[checked-1].done=true;
+    console.log("congrats!you finished your task")
+  } 
+}
+
+function uncheck(taskUndone){
+  if(taskUndone==="uncheck\n"){
+    console.log("please choose the task")
+  }
+  else{
+    let unchecked =taskUndone.replace('uncheck',' ').trim()
+    tasks[unchecked-1].done=false;
+    console.log("oops!you didn't finish your task")
+  } 
+}
+
 
 function add(newTask) {
   if (newTask === "add\n") {
