@@ -47,6 +47,9 @@ function onDataReceived(text) {
   else if (text.startsWith('add')) {
     add(text);
   }
+  else if (text.startsWith('edit')) {
+    edit(text);
+  }
   else if (text === 'list\n') {
     list()
 
@@ -132,6 +135,28 @@ function remove(rm) {
   }
 
 }
+
+function edit(editTask){
+  if(editTask==='edit\n'){
+  console.log('specify the task you want to edit')
+  }
+  else {
+    let tasks=editTask.replace('edit', " ").trim()
+    let check=parseInt(tasks)
+    if(!check){
+    task[task.length-1]=tasks
+    console.log('your last task has been updated')  
+    }
+    else {
+      let setNum=tasks.split(" ")
+      let numIndex=setNum[0]
+      task[numIndex-1]=setNum[1]
+      console.log('your changes has been saved')
+
+    }
+    }
+  }
+
 
 
 /**
