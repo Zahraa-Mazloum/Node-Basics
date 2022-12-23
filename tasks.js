@@ -9,7 +9,7 @@
  * @param  {string} name the name of the app
  * @returns {void}
  */
-function startApp(name){
+function startApp(name) {
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
@@ -34,32 +34,32 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
-  if (text === 'quit\n'|| text==='exit\n') {
+  if (text === 'quit\n' || text === 'exit\n') {
     quit();
   }
-  else if(text.startsWith('hello')){
+  else if (text.startsWith('hello')) {
     hello(text);
   }
-  else if(text==='help\n'){
+  else if (text === 'help\n') {
     help(text)
 
   }
-  else if(text.startsWith('add'))  {
+  else if (text.startsWith('add')) {
     add(text);
   }
-  else if(text==='list\n'){
+  else if (text === 'list\n') {
     list()
 
   }
-  else if(text.startsWith('remove')){
+  else if (text.startsWith('remove')) {
     remove(text)
 
   }
-  else{
+  else {
     unknownCommand(text);
   }
 }
-let task=["eat","sleep","code","repeat"]
+let task = ["eat", "sleep", "code", "repeat"]
 
 /**
  * prints "unknown command"
@@ -68,8 +68,8 @@ let task=["eat","sleep","code","repeat"]
  * @param  {string} c the text received
  * @returns {void}
  */
-function unknownCommand(c){
-  console.log('unknown command: "'+c.trim()+'"')
+function unknownCommand(c) {
+  console.log('unknown command: "' + c.trim() + '"')
 }
 
 
@@ -77,8 +77,8 @@ function unknownCommand(c){
  * Says hello
  * @returns {void}
  */
-function hello(text){ 
-  console.log(text.trim()+"!")
+function hello(text) {
+  console.log(text.trim() + "!")
 }
 
 /**
@@ -86,9 +86,18 @@ function hello(text){
  *
  * @returns {void}
  */
-function help(){
-  console.log('the list of commands : \n1.hello + if you want to add something\n2.quit\n3.exit\n')
-}
+function help() {
+  console.log('the list of commands : \n\n'
+    + 'hello :       This command will greet you back (ex: hello!);\n\n'
+    + 'hello x :     if you add a name it will greet you with the name you added (ex: hello x!)\n\n'
+    + 'exit or quit: quits the application\n\n'
+    + 'list : return the list of all the tasks you have\n\n'
+    + 'add x :add your new task to the list\n '
+    +'        (ex:add do homework It will add "do homework" to the list\n\n'
+    +'remove :remove the last task in the list\n\n'
+    +'remove +the number of the task in the list : remove the x task'
+
+)}
 
 function list() {
   task.map((item, number) => {
@@ -106,19 +115,21 @@ function add(newTask) {
   }
 }
 
-function remove(rm){
-  if (rm==='remove\n'){
-  task.pop()
-  console.log('your last task has been removed')
+function remove(rm) {
+  if (rm === 'remove\n') {
+    task.pop()
+    console.log('your last task has been removed')
   }
-  else{
-    let index=rm.replace("remove",'').trim()-1
-    if(index<0||index>task.length-1){
-      console.log(`task number ${index+1} is not in the task list`)
+  else {
+    let index = rm.replace("remove", '').trim() - 1
+    if (index < 0 || index > task.length - 1) {
+      console.log(`task number ${index + 1} is not in the task list`)
     }
-    else{task.splice(index,1) 
-      console.log(`your ${index+1} task has been removed`)}
+    else {
+      task.splice(index, 1)
+      console.log(`your ${index + 1} task has been removed`)
     }
+  }
 
 }
 
@@ -128,7 +139,7 @@ function remove(rm){
  *
  * @returns {void}
  */
-function quit(){
+function quit() {
   console.log('sad to see you quitting, goodbye!')
   process.exit();
 }
