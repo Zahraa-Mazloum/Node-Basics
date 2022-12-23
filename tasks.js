@@ -8,6 +8,7 @@
  * @param  {string} name the name of the app
  * @returns {void}
  */
+let parsedData;
 function startApp(name) {
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
@@ -67,12 +68,11 @@ function onDataReceived(text) {
     unknownCommand(text);
   }
 }
-let tasks = [
-  { task: "eat", done: true, },
-  { task: "sleep", done: false, },
-  { task: "code", done: true, },
-  { task: "repeat", done: true, },
-];
+
+let fs = require("fs");
+let data = fs.readFileSync("database.json");
+let objList = JSON.parse(data);
+let tasks = objList.tasks;
 
 /**
  * prints "unknown command"
@@ -208,7 +208,15 @@ function edit(editTask) {
  *
  * @returns {void}
  */
-function quit() {
+function quit(){
+  let fs = require("fs");
+  let data = JSON.stringify(objList);
+  try {
+    fs.writeFileSync("./database.json", data);
+    console.log('changes saved')
+  } catch (error) {
+    console.error(error);
+  }
   console.log('sad to see you quitting, goodbye!')
   process.exit();
 }
