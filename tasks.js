@@ -123,7 +123,7 @@ function remove(rm) {
   else {
     let index = rm.replace("remove", '').trim() - 1
     if (index < 0 || index > task.length - 1) {
-      console.log(`task number ${index + 1} is not in the task list`)
+      console.log(`task number ${index + 1} is not exist`)
     }
     else {
       task.splice(index, 1)
