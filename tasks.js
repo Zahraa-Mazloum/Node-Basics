@@ -69,10 +69,27 @@ function onDataReceived(text) {
   }
 }
 
-let fs = require("fs");
-let data = fs.readFileSync("database.json");
-let objList = JSON.parse(data);
-let tasks = objList.tasks;
+var tasks;
+const fs = require("fs");
+try {
+  let data = fs.readFileSync(fileSaved);
+  var objList = JSON.parse(data);
+} catch (e) {
+  console.log(e);
+}
+if (objList !== undefined) {
+  tasks = objList.tasks;
+} else {
+  objList = { tasks: [] };
+  tasks = objList.tasks;
+}
+
+let fileSaved;
+if (process.argv[2] == null) {
+  fileSaved = "database.json";
+} else {
+  fileSaved = process.argv[2];
+}
 
 /**
  * prints "unknown command"
@@ -117,41 +134,43 @@ function help() {
 
 function list() {
   tasks.map((t, index) => {
-      if (t.done) {
-          console.log(`${index + 1} . [✔] ${t.task}`);
-      } else {
-          console.log(`${index + 1} . [ ] ${t.task}`);
-      }
+    if (t.done) {
+      console.log(`${index + 1} . [✔] ${t.task}`);
+    } else {
+      console.log(`${index + 1} . [ ] ${t.task}`);
+    }
   });
 }
 
-function check(taskDone){
-  if(taskDone==="check\n"){
+function check(taskDone) {
+  if (taskDone === "check\n") {
     console.log("please choose the task")
   }
-  else{
-    let checked =taskDone.replace('check',' ').trim()
-    if(checked<0 || checked>tasks.length){
+  else {
+    let checked = taskDone.replace('check', ' ').trim()
+    if (checked < 0 || checked > tasks.length) {
       console.log('task number is not exist')
     }
-    else{
-    tasks[checked-1].done=true;
-    console.log("congrats!you finished your task")}
-  } 
-} 
-function uncheck(taskUndone){
-  if(taskUndone==="uncheck\n"){
+    else {
+      tasks[checked - 1].done = true;
+      console.log("congrats!you finished your task")
+    }
+  }
+}
+function uncheck(taskUndone) {
+  if (taskUndone === "uncheck\n") {
     console.log("please choose the task")
   }
-  else{
-    let unchecked =taskUndone.replace('uncheck',' ').trim()
-    if(unchecked<0 || unchecked>tasks.length){
+  else {
+    let unchecked = taskUndone.replace('uncheck', ' ').trim()
+    if (unchecked < 0 || unchecked > tasks.length) {
       console.log('task number is not exist')
     }
-    else{
-    tasks[unchecked-1].done=false;
-    console.log("oops!you didn't finish your task")}
-  } 
+    else {
+      tasks[unchecked - 1].done = false;
+      console.log("oops!you didn't finish your task")
+    }
+  }
 }
 
 
@@ -159,8 +178,10 @@ function add(newTask) {
   if (newTask === "add\n") {
     console.log('Please you need to specify your task \n type help if you need a hint');
   } else {
-    let t={task:newTask.replace('add','').trim(),
-    done:false,};
+    let t = {
+      task: newTask.replace('add', '').trim(),
+      done: false,
+    };
     tasks.push(t);
     console.log('your new task has been recorded!')
   }
@@ -208,11 +229,11 @@ function edit(editTask) {
  *
  * @returns {void}
  */
-function quit(){
+function quit() {
   let fs = require("fs");
   let data = JSON.stringify(objList);
   try {
-    fs.writeFileSync("./database.json", data);
+    fs.writeFileSync(fileSaved, data);
     console.log('changes saved')
   } catch (error) {
     console.error(error);
