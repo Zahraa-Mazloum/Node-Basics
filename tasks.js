@@ -1,4 +1,3 @@
-
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -62,7 +61,12 @@ function onDataReceived(text) {
     unknownCommand(text);
   }
 }
-let task = ["eat", "sleep", "code", "repeat"]
+let tasks = [
+  { task: "eat", done: true, },
+  { task: "sleep", done: false, },
+  { task: "code", done: true, },
+  { task: "repeat", done: true, },
+];
 
 /**
  * prints "unknown command"
@@ -96,68 +100,70 @@ function help() {
     + 'exit or quit: quits the application\n\n'
     + 'list : return the list of all the tasks you have\n\n'
     + 'add x :add your new task to the list\n '
-    +'        (ex:add do homework It will add "do homework" to the list\n\n'
-    +'remove :remove the last task in the list\n\n'
-    +'remove +the number of the task in the list : remove the x task'
+    + '        (ex:add do homework It will add "do homework" to the list\n\n'
+    + 'remove :remove the last task in the list\n\n'
+    + 'remove +the number of the task in the list : remove the x task'
 
-)}
+  )
+}
 
 function list() {
-  task.map((item, number) => {
-    number++;
-    console.log(`${number}. ${item}`)
-  })
+  tasks.map((t, index) => {
+      if (t.done) {
+          console.log(`${index + 1} . [✔] ${t.task}`);
+      } else {
+          console.log(`${index + 1} . [ ] ${t.task}`);
+      }
+  });
 }
 
 function add(newTask) {
   if (newTask === "add\n") {
     console.log('Please you need to specify your task \n type help if you need a hint');
   } else {
-    task.push(newTask.replace("add", " ").trim());
+    let t={task:newTask.replace('add','').trim(),
+    done:false,};
+    tasks.push(t);
     console.log('your new task has been recorded!')
   }
 }
-
 function remove(rm) {
   if (rm === 'remove\n') {
-    task.pop()
+    tasks.pop()
     console.log('your last task has been removed')
   }
   else {
     let index = rm.replace("remove", '').trim() - 1
-    if (index < 0 || index > task.length - 1) {
+    if (index < 0 || index > tasks.length - 1) {
       console.log(`task number ${index + 1} is not exist`)
     }
     else {
-      task.splice(index, 1)
+      tasks.splice(index, 1)
       console.log(`your ${index + 1} task has been removed`)
     }
   }
 
 }
-
-function edit(editTask){
-  if(editTask==='edit\n'){
-  console.log('specify the task you want to edit')
+function edit(editTask) {
+  if (editTask === 'edit\n') {
+    console.log('specify the task you want to edit')
   }
   else {
-    let tasks=editTask.replace('edit', " ").trim()
-    let check=parseInt(tasks)
-    if(!check){
-    task[task.length-1]=tasks
-    console.log('your last task has been updated')  
+    let tasket = editTask.replace('edit', " ").trim()
+    let check = parseInt(tasket)
+    if (!check) {
+      tasks[tasks.length - 1].task = tasket
+      console.log('your last task has been updated')
     }
     else {
-      let setNum=tasks.split(" ")
-      let numIndex=setNum[0]
-      task[numIndex-1]=setNum[1]
+      let setNum = tasket.split(" ")
+      let numIndex = setNum[0]
+      tasks[numIndex - 1].task = setNum[1]
       console.log('your changes has been saved')
 
     }
-    }
   }
-
-
+}
 
 /**
  * Exits the application
