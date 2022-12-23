@@ -108,7 +108,9 @@ function help() {
     + 'add x :add your new task to the list\n '
     + '        (ex:add do homework It will add "do homework" to the list\n\n'
     + 'remove :remove the last task in the list\n\n'
-    + 'remove +the number of the task in the list : remove the x task'
+    + 'remove +the number of the task in the list : remove the x task\n\n'
+    + 'check +the number of the task in the list : if you finish the x task\n\n'
+    + 'uncheck +the number of the task in the list : if you didn\'t finish the x task\n\n'
 
   )
 }
@@ -129,19 +131,26 @@ function check(taskDone){
   }
   else{
     let checked =taskDone.replace('check',' ').trim()
+    if(checked<0 || checked>tasks.length){
+      console.log('task number is not exist')
+    }
+    else{
     tasks[checked-1].done=true;
-    console.log("congrats!you finished your task")
+    console.log("congrats!you finished your task")}
   } 
-}
-
+} 
 function uncheck(taskUndone){
   if(taskUndone==="uncheck\n"){
     console.log("please choose the task")
   }
   else{
     let unchecked =taskUndone.replace('uncheck',' ').trim()
+    if(unchecked<0 || unchecked>tasks.length){
+      console.log('task number is not exist')
+    }
+    else{
     tasks[unchecked-1].done=false;
-    console.log("oops!you didn't finish your task")
+    console.log("oops!you didn't finish your task")}
   } 
 }
 
