@@ -41,7 +41,7 @@ function onDataReceived(text) {
     hello(text);
   }
   else if(text==='help\n'){
-    help()
+    help(text)
 
   }
   else if(text.startsWith('add'))  {
@@ -49,6 +49,10 @@ function onDataReceived(text) {
   }
   else if(text==='list\n'){
     list()
+
+  }
+  else if(text.startsWith('remove')){
+    remove(text)
 
   }
   else{
@@ -100,6 +104,22 @@ function add(newTask) {
     task.push(newTask.replace("add", " ").trim());
     console.log('your new task has been recorded!')
   }
+}
+
+function remove(rm){
+  if (rm==='remove\n'){
+  task.pop()
+  console.log('your last task has been removed')
+  }
+  else{
+    let index=rm.replace("remove",'').trim()-1
+    if(index<0||index>task.length-1){
+      console.log(`task number ${index+1} is not in the task list`)
+    }
+    else{task.splice(index,1) 
+      console.log(`your ${index+1} task has been removed`)}
+    }
+
 }
 
 
